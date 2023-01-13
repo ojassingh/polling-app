@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Median')
-    .setDescription('The Median API description')
+    .setTitle('Polling App')
+    .setDescription('The Polling App API description, made with Swagger')
     .setVersion('0.1')
     .build();
 

@@ -12,12 +12,10 @@ datasource db {
 
 // prisma/schema.prisma
 
-model Article {
+model Poll {
   id          Int      @id @default(autoincrement())
   title       String   @unique
   description String?
-  body        String
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  dateTime    DateTime? @default(now())
+  location    String
 }
