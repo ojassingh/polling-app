@@ -16,6 +16,7 @@ export class PollsService {
         description: createPollDto.description,
         dateTime: createPollDto.dateTime,
         location: createPollDto.location,
+        createdBy: createPollDto.createdBy
       },
     });
     

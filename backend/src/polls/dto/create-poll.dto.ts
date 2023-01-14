@@ -3,4 +3,5 @@ export class CreatePollDto {
         description: string
         dateTime: Date
         location: string
+        createdBy: string
 }

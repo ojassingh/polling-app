@@ -15,6 +15,7 @@ async function main() {
       description:
         "We are excited to share that today's Prisma ORM release adds stable support for MongoDB!",
       location: "My place",
+      createdBy: "Ojas Singh"
     },
   });
 
@@ -25,7 +26,8 @@ async function main() {
       title: "What's new in Prisma? (Q1/22)",
       description:
         'Learn about everything in the Prisma ecosystem and community from January to March 2022.',
-      location: "Your place"
+      location: "Your place",
+      createdBy: "Ojas Singh"
     },
   });
 
