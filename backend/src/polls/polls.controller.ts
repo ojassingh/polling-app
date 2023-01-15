@@ -21,7 +21,7 @@ export class PollsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.pollsService.findOne(+id);
+    return this.pollsService.findOne(id);
   }
 
   @Patch(':id')
@@ -31,6 +31,6 @@ export class PollsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.pollsService.remove(+id);
+    return this.pollsService.remove(id);
   }
 }

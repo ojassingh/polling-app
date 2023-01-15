@@ -13,10 +13,10 @@ datasource db {
 // prisma/schema.prisma
 
 model Poll {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique
-  description String?
-  dateTime    DateTime? @default(now())
+  id      String   @id @unique @default(uuid())
+  title       String
+  description String
+  date        String
   location    String
-  createdBy   String
+  creator     String
 }

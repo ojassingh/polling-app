@@ -9,14 +9,13 @@ const prisma = new PrismaClient();
 @Injectable()
 export class PollsService {
   async create(createPollDto: CreatePollDto) {
-
     const poll = await prisma.poll.create({
       data: {
         title: createPollDto.title,
         description: createPollDto.description,
-        dateTime: createPollDto.dateTime,
         location: createPollDto.location,
-        createdBy: createPollDto.createdBy
+        creator: createPollDto.creator,
+        date: createPollDto.date
       },
     });
     
@@ -28,7 +27,7 @@ export class PollsService {
     return allPolls;
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const poll = await prisma.poll.findUnique({
       where: { id: id},
     });
@@ -39,7 +38,7 @@ export class PollsService {
     return 'action prohibited';
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const deletedPoll = await prisma.poll.delete({
       where: { id: id },
     });

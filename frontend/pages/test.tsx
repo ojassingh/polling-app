@@ -18,17 +18,16 @@ const New: NextPage = () => {
 
 
     async function getFunc(){
-        const poll = await fetch("http://localhost:3000/polls", {
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            mode: "cors"
-        })
-        .then(function(response){
+        var poll = await fetch("http://localhost:3000/polls")
+        .then(res => res.json())
+        .then((response)=>{
             return response
         })
-        return poll
+        .then((res)=>{
+          return res
+        })
+        
+        return poll;
     }
 
     async function submitHandler(){
@@ -44,7 +43,7 @@ const New: NextPage = () => {
         createdBy: "creator"
       }
 
-     console.log(getFunc())
+     console.log("Here is the response: ",  await getFunc())
 
       setLoading(false);
     }
