@@ -4,21 +4,24 @@ import Head from "next/head";
 const Poll: NextPage = ({pollObj}: any) => {
 
     let poll = JSON.parse(pollObj);
-    console.log(poll)
+    // console.log(poll)
 
     return (
       <div className="">
        
         <Head>
-          <title>Poll</title>
+          <title>Answer the Poll</title>
         </Head>
 
 
         <main className="py-20 px-20">
-          <div>
+          <div id="intro">
             <h1 className="text-6xl font-semibold">Hi there, here is poll #{poll.id}!</h1>
-            <h2 className="text-xl text-gray-600">Created by {poll.createdBy}</h2>
+            <h2 className="text-xl text-gray-600">Created by <strong className="text-primary">{poll.creator}</strong> on {new Date(poll.date).toUTCString()}</h2>
           </div>
+
+
+
         </main>
 
 

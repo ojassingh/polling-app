@@ -1,10 +1,13 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import Head from "next/head";
-import Calendar from 'react-calendar'
+import Calendar from "react-calendar";
 // import 'react-calendar/dist/Calendar.css';
+import { useRouter } from "next/router";
 
 const New: NextPage = () => {
+
+  const router = useRouter()
   const [title, setTitle] = useState("");
   const [location, setLoc] = useState("");
   const [description, setDescription] = useState("");
@@ -13,7 +16,6 @@ const New: NextPage = () => {
   const [loading, setLoading] = useState(false);
 
   async function getFunc() {
-
     var poll = await fetch("http://localhost:3000/polls", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -48,7 +50,9 @@ const New: NextPage = () => {
     setLoading(true);
 
     var poll = await getFunc();
-    console.log(poll)
+    console.log("Created one at: ", poll);
+    
+    router.push('/polls/' + "d0386b46-5a25-4ba3-bc45-210815f3432c")
 
     setLoading(false);
   }
@@ -61,23 +65,24 @@ const New: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="p-20">
+      <main className="p-20 bg-fourth">
         <h1 className="text-black text-7xl font-semibold">
           Let's create a{" "}
-          <span className="px-4 py-2 bg-primary text-white outline outline-1 rounded-xl">
+          <span className="px-4 py-2 bg-primary text-white rounded-xl">
             poll!
           </span>
         </h1>
 
         <div
           id="input"
-          className="outline outline-1 outline-gray-400 rounded-xl py-10 mt-10 text-lg text-gray-600 grid gap-4 place-content-center"
+          className="outline outline-1 outline-gray-400 rounded-xl py-10 mt-10 text-lg text-gray-600 grid gap-4 place-content-center bg-chalk"
         >
-          <h1 className="text-2xl">Create a new event!</h1>
+          <h1 className="text-4xl px-10 font-bold">Create a new event!</h1>
 
-          <div className="flex flex-wrap gap-20">
-            <div className="flex-1 grid gap-4">
-                <h1>Name</h1>
+          <div className="flex flex-wrap gap-20 p-10">
+            <div className="flex-1 grid gap-2">
+              <div className="grid w-full">
+                <h1 className="font-semibold">Name</h1>
                 <input
                   onChange={(e) => {
                     setCreator(e.target.value);
@@ -86,7 +91,9 @@ const New: NextPage = () => {
                   placeholder="John Doe"
                   className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"
                 ></input>
-                <h1>Title</h1>
+              </div>
+              <div className="grid  w-full">
+                <h1 className="font-semibold">Title</h1>
                 <input
                   onChange={(e) => {
                     setTitle(e.target.value);
@@ -95,7 +102,9 @@ const New: NextPage = () => {
                   placeholder="Work event xyz..."
                   className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"
                 ></input>
-                <h1>Location</h1>
+              </div>
+              <div className="grid  w-full">
+                <h1 className="font-semibold">Location</h1>
                 <input
                   onChange={(e) => {
                     setLoc(e.target.value);
@@ -104,7 +113,10 @@ const New: NextPage = () => {
                   placeholder="Jackbar's Shack"
                   className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"
                 ></input>
-                <h1>Description</h1>
+              </div>
+
+              <div className="grid w-full">
+                <h1 className="font-semibold">Description</h1>
                 <textarea
                   onChange={(e) => {
                     setDescription(e.target.value);
@@ -115,12 +127,23 @@ const New: NextPage = () => {
                   className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"
                 ></textarea>
               </div>
-              <div className="flex-1 my-auto">
-                <Calendar value={date} onChange={setDate} className="bg-secondary rounded-3xl p-4 text-white"/>
-              </div>
+            </div>
+
+            <div className="flex-1 my-auto mx-auto">
+              <p className="font-semibold text-2xl text-center p-2">Pick a date!</p>
+              <Calendar
+                // showNeighboringMonth={true}
+                // view="month"
+                tileClassName="outline outline-1 rounded-full p-1 m-1 grid place-content-center"
+                value={date}
+                onChange={setDate}
+                className="bg-secondary rounded-3xl p-6  text-white h-full place-content-center"
+              />
+              <p className="text-center py-2 text-2xl font-semibold">Selected Date: {date.toDateString()}</p>
+            </div>
           </div>
-          <div>
-              {!loading && (
+          <div className="px-10">
+            {!loading && (
               <button
                 onClick={submitHandler}
                 className="py-2 px-10 bg-secondary hover:bg-primary rounded-xl text-white font-medium w-full mt-4"
@@ -136,7 +159,7 @@ const New: NextPage = () => {
                 Loading...
               </button>
             )}
-              </div>
+          </div>
         </div>
       </main>
     </div>
