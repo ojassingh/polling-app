@@ -4,4 +4,5 @@ export class CreatePollDto {
         date: string
         location: string
         creator: string
+        responses: string[]
 }

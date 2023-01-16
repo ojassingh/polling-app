@@ -20,6 +20,7 @@ const Poll: NextPage = ({pollObj}: any) => {
             <h2 className="text-xl text-gray-600">Created by <strong className="text-primary">{poll.creator}</strong> on {new Date(poll.date).toUTCString()}</h2>
           </div>
 
+        
 
 
         </main>

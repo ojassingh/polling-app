@@ -52,7 +52,7 @@ const New: NextPage = () => {
     var poll = await getFunc();
     console.log("Created one at: ", poll);
     
-    router.push('/polls/' + "d0386b46-5a25-4ba3-bc45-210815f3432c")
+    router.push('/polls/' + poll.id)
 
     setLoading(false);
   }
