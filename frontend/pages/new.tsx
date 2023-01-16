@@ -1,58 +1,57 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import Head from "next/head";
-import axios from "axios";
-import 'react-modern-calendar-datepicker/lib/DatePicker.css';
-import DatePicker, {Calendar, DayValue, DayRange, Day } from 'react-modern-calendar-datepicker'
+import Calendar from 'react-calendar'
+// import 'react-calendar/dist/Calendar.css';
 
 const New: NextPage = () => {
+  const [title, setTitle] = useState("");
+  const [location, setLoc] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [creator, setCreator] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  async function getFunc() {
 
-    const [title, setTitle] = useState('');
-    const [location, setLoc] = useState('');
-    const [description, setDescription] = useState('');
-    const [date, setDate] = useState(new Date());
-    const [creator, setCreator] = useState("")
-    const [loading, setLoading] = useState(false);
-
-    async function submitHandler(){
-      setLoading(true);
-
-      const d = new Date(day?.year, day?.month, day?.day)
-
-      const data = {
+    var poll = await fetch("http://localhost:3000/polls", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({
         title: title,
         description: description,
-        dateTime: d,
+        date: date.toString(),
         location: location,
-        createdBy: creator
-      }
-
-      // const poll = await axios.post('http://localhost:3000/polls', data)
-      // .then(function (response) {
-      //   return response
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
-
-      fetch("http://localhost:3000/polls", 
-      {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify(data)
-      }).then(res => res.json())
-      .then(data => {
-          console.log(data);
+        creator: creator,
+      }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        return response;
       })
-      .catch(function(err) {
-        console.info("error: ", err);
-    });
-     
-      setLoading(false);
-    }
+      .then((res) => {
+        return res;
+      });
 
-    const [day, setDay] = useState<DayValue>(null);
+    return poll;
+  }
+
+  async function submitHandler() {
+    setLoading(true);
+
+    var poll = await getFunc();
+    console.log(poll)
+
+    setLoading(false);
+  }
 
   return (
     <div className="">
@@ -75,45 +74,69 @@ const New: NextPage = () => {
           className="outline outline-1 outline-gray-400 rounded-xl py-10 mt-10 text-lg text-gray-600 grid gap-4 place-content-center"
         >
           <h1 className="text-2xl">Create a new event!</h1>
-          <div>
-            <h1>Name</h1>
-            <input onChange={(e)=>{
-                setCreator(e.target.value)
-            }} value={creator} placeholder="John Doe" className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"></input>
+
+          <div className="flex flex-wrap gap-20">
+            <div className="flex-1 grid gap-4">
+                <h1>Name</h1>
+                <input
+                  onChange={(e) => {
+                    setCreator(e.target.value);
+                  }}
+                  value={creator}
+                  placeholder="John Doe"
+                  className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"
+                ></input>
+                <h1>Title</h1>
+                <input
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                  value={title}
+                  placeholder="Work event xyz..."
+                  className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"
+                ></input>
+                <h1>Location</h1>
+                <input
+                  onChange={(e) => {
+                    setLoc(e.target.value);
+                  }}
+                  value={location}
+                  placeholder="Jackbar's Shack"
+                  className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"
+                ></input>
+                <h1>Description</h1>
+                <textarea
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                  value={description}
+                  rows={3}
+                  placeholder="Sau's birthday party! Come join us, its BYOB! Add more details ..."
+                  className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"
+                ></textarea>
+              </div>
+              <div className="flex-1 my-auto">
+                <Calendar value={date} onChange={setDate} className="bg-secondary rounded-3xl p-4 text-white"/>
+              </div>
           </div>
           <div>
-            <h1>Title</h1>
-            <input onChange={(e)=>{
-                setTitle(e.target.value)
-            }} value={title} placeholder="Work event xyz..." className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"></input>
-          </div>
-          <div>
-            <h1>Location</h1>
-            <input onChange={(e)=>{
-                setLoc(e.target.value)
-            }} value={location} placeholder="Jackbar's Shack" className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"></input>
-          </div>
-          <div>
-            <h1>Description</h1>
-            <textarea onChange={(e)=>{
-                setDescription(e.target.value)
-            }} value={description} rows={3} placeholder="Sau's birthday party! Come join us, its BYOB! Add more details ..." className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"></textarea>
-          </div>
-          <div>
-          <Calendar
-            value={day}
-            onChange={setDay}
-            shouldHighlightWeekends
-          />
-          </div>
-          <div>
-            <h1>Date</h1>
-            <input onChange={(e)=>{
-                setDate(new Date(e.target.value))
-            }} type="datetime-local" className="outline outline-1 outline-gray-400 bg-chalk text-lg rounded-xl p-1"></input>
-          </div>
-          {!loading && <button onClick={submitHandler} className="py-2 px-10 bg-secondary hover:bg-primary rounded-xl text-white font-medium">Submit</button>}
-          {loading && <button disabled className="py-2 px-10 bg-secondary hover:bg-primary rounded-xl text-white font-medium">Loading...</button>}
+              {!loading && (
+              <button
+                onClick={submitHandler}
+                className="py-2 px-10 bg-secondary hover:bg-primary rounded-xl text-white font-medium w-full mt-4"
+              >
+                Submit
+              </button>
+            )}
+            {loading && (
+              <button
+                disabled
+                className="py-2 px-10 bg-secondary hover:bg-primary rounded-xl text-white font-medium w-full mt-4"
+              >
+                Loading...
+              </button>
+            )}
+              </div>
         </div>
       </main>
     </div>

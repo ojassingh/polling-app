@@ -33,12 +33,9 @@ export default Poll;
 export async function getStaticPaths() {
 
     var polls = await fetch("http://localhost:3000/polls")
-    .then(res => res.json())
-    .then((response)=>{
-        return response
-    })
-    .then((res)=>{
-      return res
+      .then(res => res.json())
+      .then(data => {
+        return data
     })
 
     let paths = polls.map((poll: any) => ({
@@ -55,12 +52,9 @@ export async function getStaticPaths() {
 
     var poll = await fetch("http://localhost:3000/polls/" + pollID)
         .then(res => res.json())
-        .then((response)=>{
-            return response
-        })
-        .then((res)=>{
-          return res
-      })
+        .then(data => {
+          return data
+    })
 
     let pollObj = JSON.stringify(poll);
 
