@@ -1,8 +1,23 @@
+import { ApiProperty } from "@nestjs/swagger"
 export class CreatePollDto {
-        title: string
-        description: string
-        date: string
-        location: string
-        creator: string
-        responses: string[]
+
+        @ApiProperty()
+        title: string;
+
+        @ApiProperty()
+        description: string;
+
+        @ApiProperty()
+        date: string;
+
+        @ApiProperty()
+        createdAt: string;
+
+        @ApiProperty()
+        location: string;
+
+        @ApiProperty()
+        creator: string;
 }
+
+

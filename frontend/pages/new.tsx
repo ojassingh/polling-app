@@ -53,7 +53,7 @@ const New: NextPage = () => {
     console.log("Created one at: ", poll);
     
     router.push('/polls/' + poll.id)
-
+    
     setLoading(false);
   }
 

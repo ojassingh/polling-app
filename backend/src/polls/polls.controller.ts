@@ -26,11 +26,12 @@ export class PollsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePollDto: UpdatePollDto) {
-    return this.pollsService.update(+id, updatePollDto);
+    return this.pollsService.update(id, updatePollDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.pollsService.remove(id);
   }
+
 }
