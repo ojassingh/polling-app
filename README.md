@@ -1,4 +1,4 @@
-# polling-app
+# Polling App
 A simple polling applications inspired by rallly.co
 
 
